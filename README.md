@@ -25,7 +25,7 @@ Useage
     #   move the file from the pending directory, and 
     #   re-do your last command (Capistrano, Chef, Puppet, etc.)
 
-If you want to customize the locations or the before/after writing:
+Override the default settings:
 
     Dahistory.check { |o|
     
