@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.version     = Dahistory::VERSION
   s.authors     = ["da99"]
   s.email       = ["i-hate-spam-45671204@mailinator.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/da99/Dahistory"
+  s.summary     = %q{Compare file to previous history and backup.}
+  s.description = %q{Compares file to other files in specified dir(s) and backups if it does not exist.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
