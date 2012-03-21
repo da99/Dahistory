@@ -7,6 +7,7 @@ def Dahistory file = nil
   }
 
   da.save
+  da
 end # === def
 
 class Dahistory
