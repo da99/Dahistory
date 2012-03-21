@@ -97,7 +97,7 @@ class Dahistory
   
   include Base
   
-  class << self
+  module Class_Methods
     
     def find_file_copy file, *raw_dirs
       standard = File.read(file).gsub("\r", "")
@@ -119,7 +119,9 @@ class Dahistory
       found
     end # === def
     
-  end # === class
+  end # === module Class_Methods
+
+  extend Class_Methods
 
 end # === class Dahistory
 
