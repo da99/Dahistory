@@ -73,7 +73,7 @@ class Dahistory
     def backup_file str = :RETURN
       if str == :RETURN
         @backup_file ||= "#{`hostname`.strip}-#{file.gsub('/',',')}.#{Time.now.utc.strftime "%Y.%m.%d.%H.%M.%S"}"
-        return @backup_file
+        return File.join( pending_dir, @backup_file )
       end
 
       @backup_file = str

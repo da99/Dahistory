@@ -14,26 +14,40 @@ describe "Dahistory" do
   
 end # === Dahistory
 
-describe "Dahistory: new pending file" do
+describe "Dahistory: pending file" do
 
   before { reset_dirs }
   
   it "copies file to pending dir" do
-
     file = "files/a.txt"
     target = rand(1000).to_s
     chdir {
       File.write(file, target)
       pending = begin
-                  Dahistory "files/a.txt" 
+                  Dahistory file
                 rescue Dahistory::Pending => e
                   e.message
                 end
-      File.read(pending).should == target
+      name = File.basename(pending)
+      File.read(File.join "pending", name).should == target
+    }
+  end
+
+  it "does not copy file if file is already in ./pending" do
+    file = "files/#{rand 1000}.txt"
+    target = rand(10000).to_s
+    chdir {
+      File.write(file, target)
+      File.write(file.sub('files', 'pending'), target)
+      begin
+        Dahistory file
+      rescue Dahistory::Pending => e
+      end
+      Dir.glob("pending/*").size.should == 1
     }
   end
   
-end # === Dahistory: new pending file
+end # === Dahistory: pending file
 
 describe "Dahistory: existing file in ./history" do
   
