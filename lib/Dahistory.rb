@@ -38,6 +38,11 @@ class Dahistory
       @pending_dir = File.expand_path(dir)
     end
 
+    # 
+    #  Previous methods were setters.  
+    #  Alias the methods as #{name}_set
+    #  and create reader/setter methods.
+    #
     (public_instance_methods - old_meths ).each { |name| 
 
       alias_method :"#{name}_set", name
