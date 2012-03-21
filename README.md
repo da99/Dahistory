@@ -29,11 +29,11 @@ Override the default settings:
 
     Dahistory.check { |o|
     
-      o.file        "file/path.txt"
+      o.file        "file/name.txt"
       o.dirs        [ "dir1", "dir2" ]
       o.backup_dir  "./history"
-      o.pending_dir "pending_dir_path"
-      o.backup_file "#{`hostname`}.backup.path.txt"
+      o.pending_dir "./pending"
+      o.backup_file "#{`hostname`}.name.txt.#{Time.now.to_i}"
       
     }
 
