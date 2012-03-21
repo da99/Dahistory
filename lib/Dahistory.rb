@@ -13,7 +13,7 @@ end # === def
 class Dahistory
  
   Pending = Class.new(RuntimeError)
-  
+
   module Base
     
     def initialize file_path = nil
@@ -79,25 +79,15 @@ class Dahistory
       @backup_file = str
     end
 
-    def source_files
-      dirs.map { |path| 
-        full = File.join( File.expand_path(path), "/*")
-        files = Dir.glob( full, File::FNM_DOTMATCH ).select { |unk| File.file?(unk) }
-      }.flatten
-    end
-
     def save 
 
       content  = File.read(file)
       standard = content.gsub("\r", '')
 
-      old = source_files.detect { |path| 
-        raw = File.read(path) 
-        raw.gsub("\r","") == standard
-      }
+      old = self.class.find_file_copy file, dirs
 
       if !old
-        File.write(backup_file, content)
+        File.write(backup_file, content) unless self.class.find_file_copy(file, pending_dir)
         raise Pending, backup_file
       end
 
@@ -106,5 +96,30 @@ class Dahistory
   end # === Base
   
   include Base
+  
+  class << self
+    
+    def find_file_copy file, *raw_dirs
+      standard = File.read(file).gsub("\r", "")
+      found    = nil
+      dirs     = raw_dirs.flatten
+      
+      dirs.each { |path| 
+        full = File.join( File.expand_path(path), "/*")
+        files = Dir.glob( full, File::FNM_DOTMATCH ).select { |unk| File.file?(unk) }
+
+        found = files.detect { |f| 
+          raw = File.read(f)
+          raw.gsub("\r", "") == standard
+        }
+
+        break if found
+      }
+
+      found
+    end # === def
+    
+  end # === class
 
 end # === class Dahistory
+
