@@ -35,3 +35,20 @@ describe "Dahistory: new pending file" do
   
 end # === Dahistory: new pending file
 
+describe "Dahistory: existing file in ./history" do
+  
+  before { reset_dirs }
+
+  it "does not raise any error" do
+    file = "files/#{rand 10000}.txt"
+    target = rand(10000).to_s
+    chdir {
+      File.write file, target
+      File.write file.sub("files", "history"), target
+      should.not.raise { Dahistory file }
+    }
+    
+  end
+  
+end # === Dahistory: existing file in ./history
+
