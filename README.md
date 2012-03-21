@@ -21,7 +21,9 @@ Useage
     require "Dahistory"
 
     path = "some/file.txt"
-    Dahistory.check( path )
+    
+    Dahistory path 
+    
     # Checks your directory (default "./history").
     # If not found there, saves copy of file in ./pending dir and
     #  raises Dahistory::Pending_File, "pending/HOSTNAME,path,some,file.txt.TIMESTAMP"
@@ -32,7 +34,7 @@ Useage
 
 Override the default settings:
 
-    Dahistory.check { |o|
+    Dahistory { |o|
     
       o.file        "file/name.txt"
       o.dirs        "dir1", "dir2"  # defaults to "./history"

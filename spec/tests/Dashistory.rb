@@ -10,7 +10,7 @@ describe "Dahistory: new pending file" do
     chdir {
       File.write(file, target)
       pending = begin
-                  Dahistory.check("files/a.txt") 
+                  Dahistory "files/a.txt" 
                 rescue Dahistory::Pending => e
                   e.message
                 end
