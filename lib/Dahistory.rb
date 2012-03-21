@@ -39,6 +39,8 @@ class Dahistory
     end
 
     # 
+    #  My alternative to :attr_accessors:
+    #
     #  Previous methods were setters.  
     #  Alias the methods as #{name}_set
     #  and create reader/setter methods.
