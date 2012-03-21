@@ -41,6 +41,8 @@ Override the default settings:
       
     }
 
-**Note:** Both **def Dahistory** and **class Dahistory** are defined. 
-All the code is in one file and less than 150 lines: [lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
+**Note:** 
+Both **def Dahistory** and **class Dahistory** are defined. 
+All the code is in one file and less than 150 lines: 
+[lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
 

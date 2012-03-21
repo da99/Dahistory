@@ -34,7 +34,7 @@ class Dahistory
       @dirs = args.flatten.map { |dir| File.expand_path dir }
     end
 
-    def pending_dir dir = :RETURN
+    def pending_dir dir 
       @pending_dir = File.expand_path(dir)
     end
 
