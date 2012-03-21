@@ -25,7 +25,6 @@ class Dahistory
     file!(file_path) if file_path
     dirs      ['.']
     pending_dir  "./pending"
-    @backup_dir = nil
     yield(self) if block_given?
   end
   
@@ -37,10 +36,6 @@ class Dahistory
 
   def dirs *args
     @dirs = args.flatten.map { |dir| File.expand_path dir }
-  end
-
-  def backup_dir dir
-    @backup_dir = File.expand_path(dir)
   end
 
   def pending_dir dir = :RETURN
@@ -64,7 +59,7 @@ class Dahistory
         else
         
           #{name}_set(*args, &blok)
-          #
+          
         end
         
       end # === def
