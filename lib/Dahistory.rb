@@ -43,23 +43,23 @@ class Dahistory
       alias_method :"#{name}_set", name
 
       eval %~
-      def #{name} *args, &blok
+        def #{name} *args, &blok
 
-        if args.empty?
+          if args.empty?
 
-          unless instance_variable_defined?(:@#{name})
-            raise ArgumentError, "Instance variable not set: @#{name}"
+            unless instance_variable_defined?(:@#{name})
+              raise ArgumentError, "Instance variable not set: @#{name}"
+            end
+            @#{name}
+
+          else
+
+            #{name}_set(*args, &blok)
+
           end
-          @#{name}
 
-        else
-
-          #{name}_set(*args, &blok)
-
-        end
-
-      end # === def
-          ~
+        end # === def
+      ~
 
     }
 
