@@ -7,13 +7,11 @@ class Dahistory
   
   module Class_Methods
 
-    def check file_or_settings
-      da = case file_or_settings
-           when String
-             Dahistory.new { |o| o.file file_or_settings }
-           else
-             file_or_settings
-           end
+    def check file = nil
+      da = Dahistory.new { |o| 
+        o.file(file) if file
+        yield(o)     if block_given?
+      }
       
       da.save
     end
@@ -54,7 +52,7 @@ class Dahistory
     alias_method :"#{name}_set", name
 
     eval %~
-      def #{name} *args
+      def #{name} *args, &blok
       
         if args.empty?
         
@@ -65,7 +63,7 @@ class Dahistory
           
         else
         
-          #{name}_set(*args)
+          #{name}_set(*args, &blok)
           #
         end
         
