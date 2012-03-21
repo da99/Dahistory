@@ -20,9 +20,7 @@ Useage
 
     require "Dahistory"
 
-    path = "some/file.txt"
-    
-    Dahistory path 
+    Dahistory "some/file.txt" 
     
     # Checks your directory (default "./history").
     # If not found there, saves copy of file in ./pending dir and
@@ -42,4 +40,7 @@ Override the default settings:
       o.backup_file "#{`hostname`}.name.txt.#{Time.now.to_i}"
       
     }
+
+**Note:** Both **def Dahistory** and **class Dahistory** are defined. 
+All the code is in one file and less than 150 lines: [lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
 
