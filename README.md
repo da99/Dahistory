@@ -46,3 +46,17 @@ Both **def Dahistory** and **class Dahistory** are defined.
 All the code is in one file and less than 150 lines: 
 [lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
 
+Run Tests
+---------
+
+    git clone git@github.com:da99/Dahistory.git
+    cd Dahistory
+    bundle update
+    bundle exec bacon spec/main.rb
+
+Alan Kay Model of Development
+-----------------------------
+
+If you know of a better way of accomplishing the above functionality,
+please tell me.  I want to do everything possible to make everything I write
+obsolete.
