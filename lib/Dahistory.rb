@@ -21,6 +21,7 @@ class Dahistory
       file!(file_path) if file_path
       dirs         './history'
       pending_dir  './pending'
+      @on_raise_pending = nil
       yield(self) if block_given?
     end
 
@@ -38,6 +39,10 @@ class Dahistory
       @pending_dir = File.expand_path(dir)
     end
 
+    def on_raise_pending &blok
+      @on_raise_pending = blok
+    end
+
     # 
     #  My alternative to :attr_accessors:
     #
@@ -52,7 +57,7 @@ class Dahistory
       eval %~
         def #{name} *args, &blok
 
-          if args.empty?
+          if args.empty? && !block_given?
 
             unless instance_variable_defined?(:@#{name})
               raise ArgumentError, "Instance variable not set: @#{name}"
@@ -88,6 +93,7 @@ class Dahistory
 
       if !old
         File.write(backup_file, content) unless self.class.find_file_copy(file, pending_dir)
+        on_raise_pending.call if on_raise_pending
         raise Pending, backup_file
       end
 

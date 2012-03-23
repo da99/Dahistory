@@ -46,6 +46,24 @@ describe "Dahistory: pending file" do
       Dir.glob("pending/*").size.should == 1
     }
   end
+
+  it "executes :on_raise_pending" do
+    file = "files/#{rand 1000}.txt"
+    content = rand(1000).to_s
+    target = nil
+    
+    chdir {
+      File.write(file, content)
+      begin
+        Dahistory { |o|
+          o.file file
+          o.on_raise_pending { target = "done" }
+        }
+      rescue Dahistory::Pending => e
+      end
+      target.should == "done"
+    }
+  end
   
 end # === Dahistory: pending file
 
