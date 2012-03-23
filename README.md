@@ -15,7 +15,7 @@ Installation
 
     gem 'Dahistory'
 
-Useage
+Usage
 ------
 
     require "Dahistory"
@@ -38,6 +38,9 @@ Override the default settings:
       o.dirs        "dir1", "dir2"  # defaults to "./history"
       o.pending_dir "./pending"
       o.backup_file "#{`hostname`}.name.txt.#{Time.now.to_i}"
+      o.on_raise_pending {
+        # Run right before Pending_File is raised.
+      }
       
     }
 
