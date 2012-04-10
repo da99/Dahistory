@@ -18,15 +18,12 @@ Installation
 Usage
 ------
 
-    # Do this in your recipe for Chef-Solo, Capistrano, etc.
-    # Or you can use it in regular Ruby code.
+    # In your Chef-Solo recipe or your Ruby code...
 
     require "Dahistory"
     
     Dahistory "some/file.txt" 
     
-    my_awesome_chef_recipe
-
     # Checks your directory (default "./history").
     # If not found there, saves copy of file in ./pending dir and
     #  raises Dahistory::Pending_File, "pending/HOSTNAME,path,some,file.txt.TIMESTAMP"
