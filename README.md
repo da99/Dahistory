@@ -18,17 +18,22 @@ Installation
 Usage
 ------
 
-    require "Dahistory"
+    # Do this in your recipe for Chef-Solo, Capistrano, etc.
+    # Or you can use it in regular Ruby code.
 
+    require "Dahistory"
+    
     Dahistory "some/file.txt" 
     
+    my_awesome_chef_recipe
+
     # Checks your directory (default "./history").
     # If not found there, saves copy of file in ./pending dir and
     #  raises Dahistory::Pending_File, "pending/HOSTNAME,path,some,file.txt.TIMESTAMP"
-
+    #
     # You review the file,
     #   move the file from the pending directory to your source/history dir, and 
-    #   re-do your last command (Capistrano, Chef, Puppet, etc.)
+    #   run your recipe/code again.
 
 Override the default settings:
 
