@@ -15,7 +15,7 @@ Installation
 
     gem 'Dahistory'
 
-Usage
+Useage
 ------
 
     # In your Chef-Solo recipe or your Ruby code...
