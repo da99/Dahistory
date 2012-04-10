@@ -51,6 +51,33 @@ Both **def Dahistory** and **class Dahistory** are defined.
 All the code is in one file and less than 150 lines: 
 [lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
 
+Useage: Dahistory + Git
+-----------------------
+
+Dahistory has some methods that can be used as shortcuts when using git.
+
+    Dahistory { |o|
+    
+      o.file "some/file.txt"
+
+      o.add_commit
+
+      # :add_commit is a shortcut for:
+      o.on_raise_pending {
+        `git add #{o.backup_file}`
+        `git commit -m "Backup: #{o.backup_file}"`
+      }
+
+    }
+ 
+You can also add file, commit, and run "git push":
+
+    o.add_commit_push                       
+    
+    # or...
+    o.add_commit_push 'my_remote my_branch' 
+
+
 Run Tests
 ---------
 
