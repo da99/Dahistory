@@ -93,11 +93,15 @@ describe "Dahistory :git_add_commit" do
 
     Dir.chdir(@proj) {
       File.write @file, @file
-      Dahistory { |o|
-        o.file @file
-        o.git_add_commit
-        target = "Backup: #{o.backup_file}"
-      } rescue nil
+      
+      begin
+        Dahistory { |o|
+          o.file @file
+          o.git_add_commit
+          target = "Backup: #{o.backup_file}"
+        } 
+      rescue Dahistory::Pending => e
+      end
       
       Exit_Zero('git log -n 1 --oneline --decorate=short')
       .out[target].should == target
@@ -115,10 +119,14 @@ describe "Dahistory :git_add_commit_push" do
     
     Dir.chdir(@proj) {
       File.write @file, @file
-      Dahistory { |o|
-        o.file @file
-        o.git_add_commit_push
-      } rescue nil
+      
+      begin
+        Dahistory { |o|
+          o.file @file
+          o.git_add_commit_push
+        } 
+      rescue Dahistory::Pending => e
+      end
       
       Exit_Zero('git push 2>&1').out["Everything up-to-date"].should == "Everything up-to-date"
     }
