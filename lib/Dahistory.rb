@@ -1,4 +1,5 @@
 require 'Dahistory/version'
+require 'Exit_Zero'
 
 def Dahistory file = nil
   da = Dahistory.new { |o| 
@@ -17,6 +18,7 @@ class Dahistory
   module Base
     
     def initialize file_path = nil
+      @git = false
       @file = nil
       file!(file_path) if file_path
       dirs         './history'
@@ -84,6 +86,14 @@ class Dahistory
       @backup_file = str
     end
 
+    def git_add_commit
+      @git = :commit
+    end
+
+    def git_add_commit_push args = ""
+      @git = args
+    end
+
     def save 
 
       content  = File.read(file)
@@ -93,6 +103,17 @@ class Dahistory
 
       if !old
         File.write(backup_file, content) unless self.class.find_file_copy(file, pending_dir)
+        
+        
+        if @git
+          Exit_Zero "git add #{backup_file}"
+          Exit_Zero %! git commit -m "Backup: #{backup_file}"!
+        end
+        
+        if @git.is_a?(String)
+          Exit_Zero %! git push #{@git} !
+        end
+        
         on_raise_pending.call if on_raise_pending
         raise Pending, backup_file
       end

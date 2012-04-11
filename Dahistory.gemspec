@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   
   # s.rubyforge_project = "Dahistory"
   # specify any dependencies here; for example:
-  # s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency "Exit_Zero"
 end

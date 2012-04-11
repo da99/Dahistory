@@ -84,3 +84,59 @@ describe "Dahistory: existing file in ./history" do
   
 end # === Dahistory: existing file in ./history
 
+describe "Dahistory :git_add_commit" do
+  
+  behaves_like "git"
+  
+  it "adds backup file as a commit" do
+    target = nil
+
+    Dir.chdir(@proj) {
+      File.write @file, @file
+      Dahistory { |o|
+        o.file @file
+        o.git_add_commit
+        target = "Backup: #{o.backup_file}"
+      } rescue nil
+      
+      Exit_Zero('git log -n 1 --oneline --decorate=short')
+      .out[target].should == target
+    }
+  end
+    
+end # === Dahistory :git_add_commit
+
+describe "Dahistory :git_add_commit_push" do
+  
+  behaves_like "git"
+  
+  it "pushs git repo to remote" do
+    target = "Backup: #{@file}"
+    
+    Dir.chdir(@proj) {
+      File.write @file, @file
+      Dahistory { |o|
+        o.file @file
+        o.git_add_commit_push
+      } rescue nil
+      
+      Exit_Zero('git push 2>&1').out["Everything up-to-date"].should == "Everything up-to-date"
+    }
+  end
+  
+  it "passes argument to 'git push'" do
+    target = "Backup: #{@file}"
+    
+    Dir.chdir(@proj) {
+      File.write @file, @file
+      should.raise(Exit_Zero::Non_Zero) {
+        Dahistory { |o|
+          o.file @file
+          o.git_add_commit_push "old_remote someting"
+        }
+      }.message.should.match %r!'old_remote' does not appear to be a git repository!
+    }
+  end
+  
+end # === Dahistory :git_add_commit_push
+

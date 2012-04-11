@@ -60,9 +60,9 @@ Dahistory has some methods that can be used as shortcuts when using git.
     
       o.file "some/file.txt"
 
-      o.add_commit
+      o.git_add_commit
 
-      # :add_commit is a shortcut for:
+      # ... is a shortcut for:
       o.on_raise_pending {
         `git add #{o.backup_file}`
         `git commit -m "Backup: #{o.backup_file}"`
@@ -70,13 +70,25 @@ Dahistory has some methods that can be used as shortcuts when using git.
 
     }
  
-You can also add file, commit, and run "git push":
+`git_push` does the same above, but with "git push":
 
-    o.add_commit_push                       
+    o.git_add_commit_push
     
     # or...
-    o.add_commit_push 'my_remote my_branch' 
+    o.git_add_commit_push 'my_remote my_branch' 
 
+You can specify the git repo:
+
+    Dahistory { |o|
+
+      o.file "some/file.txt"
+
+       Dir.chdir("/path/to/project") {
+         o.git_add_commit
+         # or... 
+         o.git_add_commit_push
+       }
+    }
 
 Run Tests
 ---------
