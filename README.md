@@ -15,7 +15,7 @@ Installation
 
     gem 'Dahistory'
 
-Useage
+Usage
 ------
 
     # In your Chef-Solo recipe or your Ruby code...
@@ -51,7 +51,7 @@ Both **def Dahistory** and **class Dahistory** are defined.
 All the code is in one file and less than 150 lines: 
 [lib/Dahistory.rb](https://github.com/da99/Dahistory/blob/master/lib/Dahistory.rb)
 
-Useage: Dahistory + Git
+Usage: Dahistory + Git
 -----------------------
 
 Dahistory has some methods that can be used as shortcuts when using git.
@@ -62,7 +62,7 @@ Dahistory has some methods that can be used as shortcuts when using git.
 
       o.git_add_commit
 
-      # ... is a shortcut for:
+      # ...is a shortcut for:
       o.on_raise_pending {
         `git add #{o.backup_file}`
         `git commit -m "Backup: #{o.backup_file}"`
@@ -70,25 +70,13 @@ Dahistory has some methods that can be used as shortcuts when using git.
 
     }
  
-`git_push` does the same above, but with "git push":
+`git_add_commit_push` does the same above, 
+but runs "git push" after the commit:
 
     o.git_add_commit_push
     
     # or...
     o.git_add_commit_push 'my_remote my_branch' 
-
-You can specify the git repo:
-
-    Dahistory { |o|
-
-      o.file "some/file.txt"
-
-       Dir.chdir("/path/to/project") {
-         o.git_add_commit
-         # or... 
-         o.git_add_commit_push
-       }
-    }
 
 Run Tests
 ---------
