@@ -100,19 +100,24 @@ class Dahistory
       standard = content.gsub("\r", '')
 
       old = self.class.find_file_copy file, dirs
+      in_pending = self.class.find_file_copy file, pending_dir
 
-      if !old
-        File.write(backup_file, content) unless self.class.find_file_copy(file, pending_dir)
+      if !old 
         
-        
-        if @git
-          Exit_Zero "git add #{backup_file}"
-          Exit_Zero %! git commit -m "Backup: #{backup_file}"!
-        end
-        
-        if @git.is_a?(String)
-          Exit_Zero %! git push #{@git} !
-        end
+        if !in_pending
+          
+          File.write(backup_file, content) 
+
+          if @git
+            Exit_Zero "git add #{backup_file}"
+            Exit_Zero %! git commit -m "Backup: #{backup_file}"!
+          end
+
+          if @git.is_a?(String)
+            Exit_Zero %! git push #{@git} !
+          end
+          
+        end # === if !in_pending
         
         on_raise_pending.call if on_raise_pending
         raise Pending, backup_file

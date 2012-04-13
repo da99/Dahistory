@@ -87,6 +87,22 @@ end # === Dahistory: existing file in ./history
 describe "Dahistory :git_add_commit" do
   
   behaves_like "git"
+
+  it "does not add file to working tree if already pending" do
+    Dir.chdir(@proj) {
+      
+      File.write @file, @file
+      File.write(@file.sub('files', 'pending'), @file)
+      target = `git status`
+      lambda {
+        Dahistory { |o| 
+          o.file @file
+          o.git_add_commit
+        }
+      }.should.raise Dahistory::Pending
+      `git status`.should == target
+    }
+  end
   
   it "adds backup file as a commit" do
     target = nil
