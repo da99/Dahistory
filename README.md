@@ -24,7 +24,7 @@ Usage
     
     Dahistory "some/file.txt" 
     
-    # Checks your directory (default "./history").
+    # Checks your history directory (default "./history").
     # If not found there, saves copy of file in ./pending dir and
     #  raises Dahistory::Pending_File, "pending/HOSTNAME,path,some,file.txt.TIMESTAMP"
     #
@@ -32,7 +32,8 @@ Usage
     #   move the file from the pending directory to your source/history dir, and 
     #   run your recipe/code again.
 
-Override the default settings:
+You can also specify different source directories using :dirs.
+Below is how you use :dirs and other settings:
 
     Dahistory { |o|
     
