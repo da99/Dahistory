@@ -147,6 +147,24 @@ describe "Dahistory :git_add_commit" do
       .out[target].should == target
     }
   end
+  
+  it "adds backup file as a commit if in source dir" do
+    target = nil
+
+    Dir.chdir(@proj) {
+      File.write @file, @file
+      
+      Dahistory { |o|
+        o.file @file
+        o.dirs "./files"
+        o.git_add_commit
+        target = "Backup: #{o.backup_file}"
+      } 
+      
+      Exit_Zero('git log -n 1 --oneline --decorate=short')
+      .out[target].should == target
+    }
+  end
     
 end # === Dahistory :git_add_commit
 
