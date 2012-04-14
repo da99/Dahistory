@@ -13,7 +13,7 @@ are overwriting a file you have encountered before.
 Installation
 ------------
 
-    gem install 'Dahistory'
+    gem install Dahistory
 
 Usage
 ------
