@@ -103,10 +103,14 @@ class Dahistory
       @git = args
     end
 
-    def git_add_commit! path 
+    def git_it path 
       return false unless @git
       Exit_Zero "git add #{path}"
       Exit_Zero %! git commit -m "Backup: #{backup_file}"!
+
+      if @git.is_a?(String)
+        Exit_Zero %! git push #{@git} !
+      end
     end
 
     def save 
@@ -123,7 +127,7 @@ class Dahistory
       if in_dirs
         path = File.join(history, backup_basename)
         File.write(path, content)
-        git_add_commit! path 
+        git_it path 
         return true
       end
       
@@ -131,11 +135,7 @@ class Dahistory
 
         File.write(backup_file, content) 
 
-        git_add_commit! backup_file
-
-        if @git.is_a?(String)
-          Exit_Zero %! git push #{@git} !
-        end
+        git_it backup_file
 
       end # === if !in_pending
 
