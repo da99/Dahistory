@@ -37,7 +37,8 @@ Override the default settings:
     Dahistory { |o|
     
       o.file        "file/name.txt"
-      o.dirs        "dir1", "dir2"  # defaults to "./history"
+      o.dirs        "dir1", "dir2" # -> default: []
+      o.history     "./history" 
       o.pending_dir "./pending"
       o.backup_file "#{`hostname`}.name.txt.#{Time.now.to_i}"
       o.on_raise_pending {

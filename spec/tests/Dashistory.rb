@@ -14,6 +14,30 @@ describe "Dahistory" do
   
 end # === Dahistory
 
+describe "Dahistory: source files" do
+
+  before { reset_dirs }
+  
+  it "copies target file from source dir to history dir" do
+    file = "files/a.txt"
+    target = rand(1000).to_s
+    chdir {
+      
+      File.write(file, target)
+      Dahistory { |o|
+        o.file file
+        o.dirs "./files"
+      }
+      
+      name = `ls history`.strip.split.first
+      File.read(File.join "history", name).should == target
+      
+    }
+  end
+  
+end # === Dahistory: source files
+
+
 describe "Dahistory: pending file" do
 
   before { reset_dirs }

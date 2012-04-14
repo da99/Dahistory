@@ -21,7 +21,8 @@ class Dahistory
       @git = false
       @file = nil
       file!(file_path) if file_path
-      dirs         './history'
+      dirs         []
+      history      './history'
       pending_dir  './pending'
       @on_raise_pending = nil
       yield(self) if block_given?
@@ -33,8 +34,12 @@ class Dahistory
       @file = File.expand_path(path)
     end
 
-    def dirs *args
-      @dirs = args.flatten.map { |dir| File.expand_path dir }
+    def dirs *raw
+      @dirs = raw.flatten.map { |dir| File.expand_path dir }
+    end
+
+    def history raw
+      @history = File.expand_path raw 
     end
 
     def pending_dir dir 
@@ -77,6 +82,10 @@ class Dahistory
 
     }
 
+    def backup_basename
+      File.basename( backup_file )
+    end
+
     def backup_file str = :RETURN
       if str == :RETURN
         @backup_file ||= "#{`hostname`.strip}-#{file.gsub('/',',')}.#{Time.now.utc.strftime "%Y.%m.%d.%H.%M.%S"}"
@@ -99,29 +108,34 @@ class Dahistory
       content  = File.read(file)
       standard = content.gsub("\r", '')
 
-      old = self.class.find_file_copy file, dirs
+      in_dirs    = self.class.find_file_copy file, dirs
+      in_history = self.class.find_file_copy file, history
       in_pending = self.class.find_file_copy file, pending_dir
 
-      if !old 
-        
-        if !in_pending
-          
-          File.write(backup_file, content) 
+      return true if in_history
 
-          if @git
-            Exit_Zero "git add #{backup_file}"
-            Exit_Zero %! git commit -m "Backup: #{backup_file}"!
-          end
-
-          if @git.is_a?(String)
-            Exit_Zero %! git push #{@git} !
-          end
-          
-        end # === if !in_pending
-        
-        on_raise_pending.call if on_raise_pending
-        raise Pending, backup_file
+      if in_dirs
+        File.write(File.join(history, backup_basename), content)
+        return true
       end
+      
+      if !in_pending
+
+        File.write(backup_file, content) 
+
+        if @git
+          Exit_Zero "git add #{backup_file}"
+          Exit_Zero %! git commit -m "Backup: #{backup_file}"!
+        end
+
+        if @git.is_a?(String)
+          Exit_Zero %! git push #{@git} !
+        end
+
+      end # === if !in_pending
+
+      on_raise_pending.call if on_raise_pending
+      raise Pending, backup_file
 
     end # === def
     
