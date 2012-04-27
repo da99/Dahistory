@@ -143,7 +143,7 @@ describe "Dahistory :git_add_commit" do
       rescue Dahistory::Pending => e
       end
       
-      Exit_Zero('git log -n 1 --oneline --decorate=short')
+      Exit_0('git log -n 1 --oneline --decorate=short')
       .out[target].should == target
     }
   end
@@ -161,7 +161,7 @@ describe "Dahistory :git_add_commit" do
         target = "Backup: #{o.backup_file}"
       } 
       
-      Exit_Zero('git log -n 1 --oneline --decorate=short')
+      Exit_0('git log -n 1 --oneline --decorate=short')
       .out[target].should == target
     }
   end
@@ -186,7 +186,7 @@ describe "Dahistory :git_add_commit_push" do
       rescue Dahistory::Pending => e
       end
       
-      Exit_Zero('git push 2>&1').out["Everything up-to-date"].should == "Everything up-to-date"
+      Exit_0('git push 2>&1').out["Everything up-to-date"].should == "Everything up-to-date"
     }
   end
   
@@ -195,7 +195,7 @@ describe "Dahistory :git_add_commit_push" do
     
     Dir.chdir(@proj) {
       File.write @file, @file
-      should.raise(Exit_Zero::Non_Zero) {
+      should.raise(Exit_0::Non_0) {
         Dahistory { |o|
           o.file @file
           o.git_add_commit_push "old_remote someting"

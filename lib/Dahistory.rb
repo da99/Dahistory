@@ -1,5 +1,5 @@
 require 'Dahistory/version'
-require 'Exit_Zero'
+require 'Exit_0'
 
 def Dahistory file = nil
   da = Dahistory.new { |o| 
@@ -105,11 +105,11 @@ class Dahistory
 
     def git_it path 
       return false unless @git
-      Exit_Zero "git add #{path}"
-      Exit_Zero %! git commit -m "Backup: #{backup_file}"!
+      Exit_0 "git add #{path}"
+      Exit_0 %! git commit -m "Backup: #{backup_file}"!
 
       if @git.is_a?(String)
-        Exit_Zero %! git push #{@git} !
+        Exit_0 %! git push #{@git} !
       end
     end
 

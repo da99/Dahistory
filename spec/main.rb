@@ -12,14 +12,14 @@ def chdir
 end
 
 def reset_dirs
-  Exit_Zero "rm -rf #{FOLDER}"
-  Exit_Zero "mkdir #{FOLDER}"
-  Exit_Zero "mkdir #{FOLDER}/files"
-  Exit_Zero "mkdir #{FOLDER}/history"
-  Exit_Zero "mkdir #{FOLDER}/history/blue"
-  Exit_Zero "mkdir #{FOLDER}/history/red"
-  Exit_Zero "mkdir #{FOLDER}/history/yellow"
-  Exit_Zero "mkdir #{FOLDER}/pending"
+  Exit_0 "rm -rf #{FOLDER}"
+  Exit_0 "mkdir #{FOLDER}"
+  Exit_0 "mkdir #{FOLDER}/files"
+  Exit_0 "mkdir #{FOLDER}/history"
+  Exit_0 "mkdir #{FOLDER}/history/blue"
+  Exit_0 "mkdir #{FOLDER}/history/red"
+  Exit_0 "mkdir #{FOLDER}/history/yellow"
+  Exit_0 "mkdir #{FOLDER}/pending"
 end
 
 reset_dirs
@@ -29,20 +29,20 @@ shared( "git" ) {
   before {
     @proj     = "#{FOLDER}/project_#{rand 1000}"
     @git_repo = "#{@proj}.git"
-    Exit_Zero "mkdir -p #{@git_repo}"
-    Exit_Zero "cd #{@git_repo} && git init --bare"
-    Exit_Zero "mkdir -p #{@proj}"
+    Exit_0 "mkdir -p #{@git_repo}"
+    Exit_0 "cd #{@git_repo} && git init --bare"
+    Exit_0 "mkdir -p #{@proj}"
     
     Dir.chdir(@proj) {
-      Exit_Zero "mkdir files"
-      Exit_Zero "mkdir history"
-      Exit_Zero "mkdir pending"
-      Exit_Zero "git init"
-      Exit_Zero "git remote add origin #{@git_repo}"
-      Exit_Zero "touch README.md"
-      Exit_Zero "git add ."
-      Exit_Zero %! git commit -m "First commit." !
-      Exit_Zero "git push -u origin master"
+      Exit_0 "mkdir files"
+      Exit_0 "mkdir history"
+      Exit_0 "mkdir pending"
+      Exit_0 "git init"
+      Exit_0 "git remote add origin #{@git_repo}"
+      Exit_0 "touch README.md"
+      Exit_0 "git add ."
+      Exit_0 %! git commit -m "First commit." !
+      Exit_0 "git push -u origin master"
     }
     @file    = "files/#{rand 1000}.txt"
   }
